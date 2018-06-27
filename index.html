@@ -1,0 +1,24 @@
+<html>
+	<head>
+		
+	</head>
+	<body>
+		<form onSubmit="downloadCanvas()">
+			<canvas id="grid" width="1000" height="1000"></canvas>
+			<button type="submit" value="downloadCanvas">Download</button>
+		</form>
+		<script>
+				var canvas = document.getElementById("grid");
+				canvas.fillStyle="#000000";
+				var context = canvas.getContext('2d');
+				context.fillRect(0,0,1000,1000);
+				
+				var downloadCanvas = function()
+				{
+					var canvas = document.getElementById("grid");
+					var img = canvas.toDataURL("image/png");
+					
+				}
+		</script>
+	</body>
+</html>
