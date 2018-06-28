@@ -9,17 +9,26 @@
 			<canvas id="grid" width="1000" height="1000"></canvas>
 		</form>
 		<script>
+			var downloadCanvas = function()
+			{
 				var canvas = document.getElementById("grid");
-				canvas.fillStyle="#000000";
-				var context = canvas.getContext('2d');
-				context.fillRect(0,0,1000,1000);
+				var img = canvas.toDataURL("image/png");
+			}
+			
+			var drawGrid = function(canvas, context, width,height)
+			{
 				
-				var downloadCanvas = function()
-				{
-					var canvas = document.getElementById("grid");
-					var img = canvas.toDataURL("image/png");
-					
-				}
+				
+			}
+			
+			
+			var canvas = document.getElementById("grid");
+			canvas.fillStyle="#000000";
+			var context = canvas.getContext('2d');
+			var width = canvas.width;
+			var height = canvas.height;
+			context.fillRect(0,0,width,height);
+			
 		</script>
 	</body>
 </html>
