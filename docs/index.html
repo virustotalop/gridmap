@@ -1,35 +1,45 @@
 <html>
 	<head>
-		
+		<script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
 	</head>
-	<body>
+	<body onload="init();">
 		<form id="canvas-form" onSubmit="downloadCanvas()">
 			<button type="submit" value="downloadCanvas">Download</button>
 			</br>
-			<canvas id="grid" width="1000" height="1000"></canvas>
+			<canvas id="canvas" width="1000" height="1000"></canvas>
 		</form>
 		<script>
-			var downloadCanvas = function()
+			function init() 
 			{
-				var canvas = document.getElementById("grid");
-				var img = canvas.toDataURL("image/png");
-			}
+				var downloadCanvas = function()
+				{
+					var canvas = document.getElementById("canvas");
+					var img = canvas.toDataURL("image/png");
+				}
 			
-			var drawGrid = function(canvas, context, width,height)
-			{
-				
-				
-			}
+				/*var drawGrid = function(width,height)
+				{
+					for(var i = 20; i < width; i += 20)
+					{
+						var canvas = new createjs.Stage("canvas");
+						context.beginPath();
+						context.moveTo(i, 0);
+						context.lineTo(i, height);
+						context.stroke();
+					}
+				}*/
 			
 			
-			var canvas = document.getElementById("grid");
-			canvas.fillStyle="#000000";
-			var context = canvas.getContext('2d');
-			var width = canvas.width;
-			var height = canvas.height;
-			context.fillRect(0,0,width,height);
+				var canvas = new createjs.Stage("canvas");
+				//var width = canvas.width;
+				//var height = canvas.height;
+				var square = new createjs.Shape();
+				square.graphics.beginFill("black").drawRect(0,0,width,height);
 			
-			drawGrid(canvas, context, width, height);
-		</script>
+				canvas.addChild(square);
+				canvas.update();
+				//drawGrid(width, height);
+		}
+	</script>
 	</body>
 </html>
