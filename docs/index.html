@@ -3,43 +3,74 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/EaselJS/1.0.2/easeljs.min.js" integrity="sha256-m4ldXda61DCZVuvCEAAZeHlAsDkeMEMtrH68df1sxME=" crossorigin="anonymous"></script>
 	</head>
 	<body onload="init();">
-		<form id="canvas-form" onSubmit="downloadCanvas()">
-			<button type="submit" value="downloadCanvas">Download</button>
-			</br>
-			<canvas id="canvas" width="1000" height="1000"></canvas>
-		</form>
+		<canvas id="canvas" width="500" height="500"></canvas>
 		<script>
-			function init() 
+		
+		var htmlCanvas = document.getElementById("canvas");
+		var width = htmlCanvas.width;
+		var height = htmlCanvas.height;
+		
+		function downloadCanvas()
+		{
+			var img = htmlCanvas.toDataURL("image/png");
+			var a = document.createElement("a");
+			a.href = img;
+			a.download = "map.png";
+			a.type = "image/png";
+			a.target = "_blank";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+		}
+		
+		function init() 
+		{
+				
+			var stage = new createjs.Stage("canvas");
+			
+			function drawGrid()
 			{
-				var downloadCanvas = function()
+				var diff = width / 20;
+				var lineColor = "red";
+				var lineStyle = 1;
+				
+				//Draw vertical
+				for(var i = diff; i < width; i += diff)
 				{
-					var canvas = document.getElementById("canvas");
-					var img = canvas.toDataURL("image/png");
+					var line = new createjs.Shape();
+					var graphics = line.graphics;
+					graphics.beginStroke(lineColor);
+					graphics.setStrokeStyle(lineStyle);
+					graphics.moveTo(i, 0);
+					graphics.lineTo(i, height);
+					graphics.endStroke();
+					stage.addChild(line);
 				}
-			
-				/*var drawGrid = function(width,height)
+				//Draw horizontal
+				for(var i = diff; i < height; i+= diff)
 				{
-					for(var i = 20; i < width; i += 20)
-					{
-						var canvas = new createjs.Stage("canvas");
-						context.beginPath();
-						context.moveTo(i, 0);
-						context.lineTo(i, height);
-						context.stroke();
-					}
-				}*/
+					var line = new createjs.Shape();
+					var graphics = line.graphics;
+					graphics.beginStroke(lineColor);
+					graphics.setStrokeStyle(lineStyle);
+					graphics.moveTo(0, i);
+					graphics.lineTo(width, i);
+					graphics.endStroke();
+					stage.addChild(line);
+				}
+				
+				//Update canvas
+				stage.update();
+			}
 			
+			var square = new createjs.Shape();
+			square.graphics.beginFill("black").drawRect(0, 0, width, height);
 			
-				var canvas = new createjs.Stage("canvas");
-				//var width = canvas.width;
-				//var height = canvas.height;
-				var square = new createjs.Shape();
-				square.graphics.beginFill("black").drawRect(0,0,width,height);
-			
-				canvas.addChild(square);
-				canvas.update();
-				//drawGrid(width, height);
+			stage.addChild(square);
+			stage.update();
+			drawGrid();
 		}
 	</script>
+		<button onClick="downloadCanvas()">Download</button>
 	</body>
 </html>
